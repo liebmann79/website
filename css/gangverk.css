@@ -102,6 +102,7 @@ header h2 { margin:0 10px; text-shadow:none; }
 
 #clientlist{
 	padding:36px 16px 54px;
+	margin-bottom:100px;
 } #clientlist a {
 		display:inline-block;
 		width:300px;
