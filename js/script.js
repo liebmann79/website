@@ -42,6 +42,7 @@ function adjustBackground(){
 
 $(document).ready(function() {
 	
+	adjustBackground();
 	$(window).load(function() { 
 		$(".loader").fadeOut('fast', function () {
 			$("header").fadeIn(500);
@@ -51,7 +52,7 @@ $(document).ready(function() {
 			$("header").transition({ scale: 1 }, 800, "bounceIn");	
 		}); 
 	});
-	adjustBackground();
+	
 	
 });
 

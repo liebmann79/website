@@ -70,9 +70,8 @@ h3 { font-family: 'LeagueGothic'; font-size:28px; letter-spacing: 1px; color:#99
 
 /* CONTENT */
 header { position:absolute; top:30%; left:50%; width:650px; height:330px; margin:-165px 0 0 -325px; text-align:center; display:none; }
-header img, header h2 { display:inline; font-size:30px;}
-header img { margin-top:3px; }
-header h2 { margin:0 10px; text-shadow:none; }
+header h2 { font-size:30px;margin:0 10px; text-shadow:none; }
+header h2 img{ position:relative; top:4px; padding:0 4px;}
 
 .bottom{
 	position:absolute;
