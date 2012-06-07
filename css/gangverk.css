@@ -36,7 +36,7 @@ figure { margin:0; }
 html, body { margin:0; padding:0; overflow:hidden; -webkit-font-smoothing: antialiased; font-family:Arial,Helvetica, sans-serif; }
 a { text-decoration:none; transition: color .2s linear; -moz-transition: color .2s linear; -o-transition: color .2s linear; -webkit-transition: color .2s linear; }
 
-.loader { width:100%; height:100%; position:absolute; background:url(./img/loader.gif) center center no-repeat; z-index:9999; top:0; left:0; opacity:.70; filter:alpha(opacity=70); filter:"alpha(opacity=70)"; }
+.loader { width:100%; height:100%; position:absolute; background:url(/img/loader.gif) center center no-repeat; z-index:9999; top:0; left:0; opacity:.70; filter:alpha(opacity=70); filter:"alpha(opacity=70)"; }
 
 nav.home { clear:both; position:relative; width:100%; height:50px; z-index:999; margin-top:70px; }
 nav.other { position:absolute; top:5%; width:100%; z-index:999; }
