@@ -44,13 +44,11 @@ $(document).ready(function() {
 	
 	adjustBackground();
 	$(window).load(function() { 
-		$(".loader").fadeOut('fast', function () {
-			$("header").fadeIn(500);
-			$("header").css({ scale: 0 }); 
-			$("html, body").css({ overflow: 'auto' });
-			$.cssEase["bounceIn"] = "cubic-bezier(0.2,0.8,0,1.1)";
-			$("header").transition({ scale: 1 }, 800, "bounceIn");	
-		}); 
+		$("header h2").fadeIn(500);
+		$("header h2").css({ scale: 0 }); 
+		$("html, body").css({ overflow: 'auto' });
+		$.cssEase["bounceIn"] = "cubic-bezier(0.2,0.8,0,1.1)";
+		$("header h2").transition({ scale: 1 }, 800, "bounceIn");	
 	});
 	
 	

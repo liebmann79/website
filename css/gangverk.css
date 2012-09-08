@@ -69,8 +69,8 @@ h3 { font-family: 'LeagueGothic'; font-size:28px; letter-spacing: 1px; color:#99
 #contacts a { color:#3B331E; text-shadow: 1px 1px 0px #A19984; }
 
 /* CONTENT */
-header { position:absolute; top:30%; left:50%; width:650px; height:330px; margin:-165px 0 0 -325px; text-align:center; display:none; }
-header h2 { font-size:30px;margin:0 10px; text-shadow:none; }
+header { position:absolute; top:30%; left:50%; width:650px; height:330px; margin:-165px 0 0 -325px; text-align:center;}
+header h2 { font-size:30px;margin:0 10px; text-shadow:none; display:none;}
 header h2 img{ position:relative; top:4px; padding:0 4px;}
 
 .bottom{
