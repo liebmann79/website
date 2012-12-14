@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/datepicker.css" rel="stylesheet" media="screen">
+
   </head>
   <body>
     <form class="form-horizontal" method="GET" action="https://script.google.com/a/macros/gangverk.is/s/AKfycbw7IHDzs2oli5NyAoxR5EfkKzNNzwvUfHwsaUe9xPSeaYaOidIi/exec">  
@@ -48,6 +50,12 @@
         </fieldset>  
     </form>  
     <script src="/http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/+js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+    $('#date').datepicker({
+      format: 'mm-dd-yyyy'
+    });
+    </script>
   </body>
 </html
