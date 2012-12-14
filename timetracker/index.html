@@ -23,13 +23,6 @@
             <label class="control-label" for="project">Project</label>  
             <div class="controls">  
               <select id="project" name="project">  
-                <option value="Radio.com Universal" >Radio.com Universal</option>  
-                <option value="Radio 365">Radio 365</option>  
-                <option value="Radio.com Android">Radio.com Android</option>  
-                <option value="Radio.com iPhone">Radio.com iPhone</option>  
-                <option value="Radio.com Django">Radio.com Django</option>  
-                 <option value="CBSIMG">CBSIMG</option>
-                <option value="Push notifications">Push notifications</option>  
               </select>  
             </div>  
           </div>  
@@ -57,6 +50,20 @@
     $('#date').datepicker({
       format: 'yyyy-mm-dd'
     });
+    function listProjects(root) {
+      var feed = root.feed;
+      var entries = feed.entry || [];
+      var html = [];
+
+      for (var i = 0; i < entries.length; ++i) {
+        var entry = entries[i];
+        var title = entry.title.$t;
+
+        html.push('<option value="', title,'">', title, '</option>');
+      }
+      $("#project").html(html.join(""));
+    }
     </script>
+    <script src="https://spreadsheets.google.com/feeds/list/0Amb4QxC2-V3jdGYtY1R0Z2RlZG1GMUZDeUtDSHpCZkE/2/public/basic?alt=json&callback=listProjects"></script>
   </body>
 </html
