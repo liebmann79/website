@@ -49,7 +49,7 @@
     <script type="text/javascript">
     $('#date').datepicker({
       format: 'yyyy-mm-dd'
-    });
+    }).datepicker('setValue',new Date());
     function listProjects(root) {
       var feed = root.feed;
       var entries = feed.entry || [];
