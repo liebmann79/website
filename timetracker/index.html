@@ -47,9 +47,12 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
+    var trackingDate = new Date();
+    trackingDate.setDate(trackingDate.getDate()-1);
+
     $('#date').datepicker({
       format: 'yyyy-mm-dd'
-    }).datepicker('setValue',new Date());
+    }).datepicker('setValue',trackingDate);
     function listProjects(root) {
       var feed = root.feed;
       var entries = feed.entry || [];
