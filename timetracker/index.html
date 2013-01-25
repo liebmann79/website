@@ -4,13 +4,13 @@
     <title>Gangverk Time Tracking</title>
     <!-- Bootstrap -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/css/datepicker.css" rel="stylesheet" media="screen">
+    <link href="http://gangverk.is/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="http://gangverk.is/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="http://gangverk.is/css/datepicker.css" rel="stylesheet" media="screen">
 
   </head>
   <body>
-    <form class="form-horizontal" method="GET" action="https://script.google.com/a/macros/gangverk.is/s/AKfycbw7IHDzs2oli5NyAoxR5EfkKzNNzwvUfHwsaUe9xPSeaYaOidIi/exec">  
+    <form class="form-horizontal" method="GET" id="timeForm" action="https://script.google.com/a/macros/gangverk.is/s/AKfycbw7IHDzs2oli5NyAoxR5EfkKzNNzwvUfHwsaUe9xPSeaYaOidIi/exec">  
         <fieldset>  
           <legend>Gangverk Time Tracking</legend>  
           <div class="control-group">  
@@ -42,10 +42,11 @@
             <button type="submit" class="btn btn-primary">Submit</button>   
           </div>  
         </fieldset>  
+        <div id="result"></div>
     </form>  
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="http://gangverk.is/js/bootstrap.min.js"></script>
+    <script src="http://gangverk.is/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
     var trackingDate = new Date();
     trackingDate.setDate(trackingDate.getDate()-1);
@@ -53,6 +54,7 @@
     $('#date').datepicker({
       format: 'yyyy-mm-dd'
     }).datepicker('setValue',trackingDate);
+
     function listProjects(root) {
       var feed = root.feed;
       var entries = feed.entry || [];
@@ -66,6 +68,26 @@
       }
       $("#project").html(html.join(""));
     }
+    
+    $("#timeForm").submit(function(event) {
+ 
+      /* stop form from submitting normally */
+      event.preventDefault();
+     
+      /* get some values from elements on the page: */
+      var $form = $( this ),
+          url = $form.attr( 'action' );
+     
+      /* Send the data using get */
+      $.ajax({
+        url: url,
+        data: $form.serialize(),
+        success: function() {alert("Thanks a bunch!");},
+        error:function(){alert("oops, that didn't work");},
+        complete:function(){alert("complete");},
+        xhrFields: {withCredentials: true}
+      });
+    }); 
     </script>
     <script src="https://spreadsheets.google.com/feeds/list/0Amb4QxC2-V3jdGYtY1R0Z2RlZG1GMUZDeUtDSHpCZkE/2/public/basic?alt=json&callback=listProjects"></script>
   </body>
