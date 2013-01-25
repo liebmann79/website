@@ -4,9 +4,9 @@
     <title>Gangverk Time Tracking</title>
     <!-- Bootstrap -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="http://gangverk.is/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="http://gangverk.is/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="http://gangverk.is/css/datepicker.css" rel="stylesheet" media="screen">
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/datepicker.css" rel="stylesheet" media="screen">
 
   </head>
   <body>
@@ -45,8 +45,8 @@
         <div id="result"></div>
     </form>  
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="http://gangverk.is/js/bootstrap.min.js"></script>
-    <script src="http://gangverk.is/js/bootstrap-datepicker.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
     var trackingDate = new Date();
     trackingDate.setDate(trackingDate.getDate()-1);
@@ -82,9 +82,10 @@
       $.ajax({
         url: url,
         data: $form.serialize(),
+        crossDomain:true,
+        dataType:"jsonp",
         success: function() {alert("Thanks a bunch!");},
-        error:function(){alert("oops, that didn't work");},
-        complete:function(){alert("complete");},
+        error:function(){alert("Oops, that didn't work");},
         xhrFields: {withCredentials: true}
       });
     }); 
