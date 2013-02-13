@@ -42,12 +42,44 @@
             <button type="submit" class="btn btn-primary">Submit</button>   
           </div>  
         </fieldset>  
-        <div id="result"></div>
-    </form>  
+        <div id="result">
+          <button id="authorize-button">Authorize</button>
+        </div>
+    </form>
+    <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script> 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
+
+    var apiKey = 'AIzaSyDYQt9muwp3qIqu5PImdEXfC9tzcgaliw0';
+
+    function onClientLoad() {
+      alert("yay");
+      gapi.client.setApiKey(apiKey);
+      window.setTimeout(checkAuth,1);
+    }
+
+    function checkAuth() {
+      gapi.auth.authorize({immediate: true}, handleAuthResult);
+    }
+
+    function handleAuthResult(authResult) {
+      var authorizeButton = document.getElementById('authorize-button');
+      if (authResult && !authResult.error) {
+        authorizeButton.style.visibility = 'hidden';
+      } else {
+        authorizeButton.style.visibility = '';
+        authorizeButton.onclick = handleAuthClick;
+      }
+    }
+
+    function handleAuthClick(event) {
+      gapi.auth.authorize({immediate: false}, handleAuthResult);
+      return false;
+    }
+
+
     var trackingDate = new Date();
     trackingDate.setDate(trackingDate.getDate()-1);
 
