@@ -99,7 +99,6 @@
       if (authResult && !authResult.error) {
         $("#timeForm").show();
         $("#authorizeDiv").hide();
-        //gapi.client.load('drive', 'v2', checkFileAuth);
       } else {
         $("#timeForm").hide();
         $("#authorizeDiv").show();
@@ -142,6 +141,7 @@
         function(status){
             $loader.hide();
             $("#successDiv").show().delay(3000).fadeOut(2000);
+            $('#timeForm')[0].reset();
         },
         function(status){
             $loader.hide();
