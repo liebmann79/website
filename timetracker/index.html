@@ -7,24 +7,10 @@
     <link href="/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/css/datepicker.css" rel="stylesheet" media="screen">
-    <style>
-      .appears{ display:none;}
-      #successDiv {color:#2EA4D0;}
-      #errorDiv {color:#D13480;}
-      h3 {margin:0px;}
-    </style>
 
   </head>
   <body>
-    <div id="infoBar" style="height:44px;">
-      <h3 id="successDiv" class="appears">Thank you!</h3>
-      <h3 id="errorDiv" class="appears">Ooops, that didn't work...</h3>
-      <h3 id="loadingDiv">Hold your horses...</h3>
-      <div id="authorizeDiv" class="appears">
-      <h3> You are going to need to <a id="authorizeButton" href="#authorize">authorize</a> before use
-      </div>
-    </div>
-    <form class="form-horizontal appears" method="GET" id="timeForm" action="https://script.google.com/a/macros/gangverk.is/s/AKfycbw7IHDzs2oli5NyAoxR5EfkKzNNzwvUfHwsaUe9xPSeaYaOidIi/exec">  
+    <form class="form-horizontal" method="GET" id="timeForm" action="https://script.google.com/a/macros/gangverk.is/s/AKfycbw7IHDzs2oli5NyAoxR5EfkKzNNzwvUfHwsaUe9xPSeaYaOidIi/exec">  
         <fieldset>  
           <legend>Gangverk Time Tracking</legend>  
           <div class="control-group">  
@@ -56,7 +42,8 @@
             <button type="submit" class="btn btn-primary">Submit</button>   
           </div>  
         </fieldset>  
-    </form>
+        <div id="result"></div>
+    </form>  
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
@@ -67,48 +54,6 @@
     $('#date').datepicker({
       format: 'yyyy-mm-dd'
     }).datepicker('setValue',trackingDate);
-
-
-    var apiKey = "AIzaSyDYQt9muwp3qIqu5PImdEXfC9tzcgaliw0";
-    var clientId = "339326896468.apps.googleusercontent.com";
-    var scopes = "https://www.googleapis.com/auth/drive.file";
-    function load() {
-      gapi.client.setApiKey(apiKey);
-      window.setTimeout(checkAuth,1);
-    }
-
-    function checkAuth() {
-      gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
-    }
-    function checkFileAuth(){
-      var request = gapi.client.drive.files.get({'fileId':"0Amb4QxC2-V3jdGYtY1R0Z2RlZG1GMUZDeUtDSHpCZkE"});
-      request.execute(function(resp) {
-        if (!resp.error) {
-          console.log('Title: ' + resp.title);
-          console.log('Description: ' + resp.description);
-          console.log('MIME type: ' + resp.mimeType);
-        } else {
-          console.log('Error code: ' + resp.error.code);
-          console.log('Error message: ' + resp.error.message);
-          // More error information can be retrieved with resp.error.errors.
-        }
-      });
-    }
-
-    function handleAuthResult(authResult) {
-      if (authResult && !authResult.error) {
-        $("#timeForm").show();
-        $("#authorizeDiv").hide();
-        //gapi.client.load('drive', 'v2', checkFileAuth);
-      } else {
-        $("#timeForm").hide();
-        $("#authorizeDiv").show();
-      }
-      $("#loadingDiv").hide();
-    }
-
-
-   
 
     function listProjects(root) {
       var feed = root.feed;
@@ -124,7 +69,6 @@
       $("#project").html(html.join(""));
     }
     
-    //Ultimately use GData for this
     $("#timeForm").submit(function(event) {
  
       /* stop form from submitting normally */
@@ -135,50 +79,17 @@
           url = $form.attr( 'action' );
      
       /* Send the data using get */
-      $form.fadeTo(100,0.4);
-      var $loader = $("#loadingDiv").show();
-      var dfd = new jQuery.Deferred();
-      $.when( dfd.promise() ).then(
-        function(status){
-            $loader.hide();
-            $("#successDiv").show().delay(3000).fadeOut(2000);
-        },
-        function(status){
-            $loader.hide();
-            $("#errorDiv").show().delay(3000).fadeOut(2000);
-            $form.fadeTo(100,1.0);
-        }
-      );
       $.ajax({
         url: url,
         data: $form.serialize(),
         crossDomain:true,
         dataType:"jsonp",
-        complete: function(){ 
-          $form.fadeTo(100,1.0);
-        },
-        success: function() {
-          dfd.resolve();
-        },
-        error:function(){
-          dfd.reject();
-        },
+        success: function() {alert("Thanks a bunch!");},
+        error:function(){alert("Oops, that didn't work");},
         xhrFields: {withCredentials: true}
       });
-      //JSONP ajax calls do not receive HTTP errors
-      //So if we haven't succeeded in 6 seconds call it an error
-      setTimeout(function(){dfd.reject();},6000);
-    });
-
-    $("#authorizeButton").click( function(event) {
-      event.preventDefault();
-      gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
-    });
-
-    //TEMPORARY HACK
-    //handleAuthResult({});
+    }); 
     </script>
-    <script src="https://apis.google.com/js/client.js?onload=load"></script>
     <script src="https://spreadsheets.google.com/feeds/list/0Amb4QxC2-V3jdGYtY1R0Z2RlZG1GMUZDeUtDSHpCZkE/2/public/basic?alt=json&callback=listProjects"></script>
   </body>
 </html
