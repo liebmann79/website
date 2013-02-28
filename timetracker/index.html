@@ -154,20 +154,29 @@
       var apiKey = "AIzaSyDYQt9muwp3qIqu5PImdEXfC9tzcgaliw0";
       var clientId = "339326896468.apps.googleusercontent.com";
       var scopes = "https://www.googleapis.com/auth/drive.file";
-      gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuth);
+      gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, authorization);
     });
 
-    //Deferred for authorization
-    var adfd = new jQuery.Deferred();
-    $.when(adfd.promise()).then(handleAuth,handleAuth);
-    function authCallback(resp){
-      if (resp.success) {
-        adfd.resolve(1);
-      }else{
-        adfd.reject(0);
+    var authCallback;
+
+    function authorization(resp){
+      
+      if (!resp || resp.error) {
+        return handleAuth(0);
       }
+      //Deferred for authorization
+      var adfd = new jQuery.Deferred();
+      $.when(adfd.promise()).then(handleAuth,handleAuth);
+      authCallback = function(resp){
+        if (resp.success) {
+          adfd.resolve(1);
+        }else{
+          adfd.reject(0);
+        }
+      }
+      setTimeout(function(){adfd.reject();},3000);
     }
-    setTimeout(function(){adfd.reject();},3000);
+    authorization({});
 
     </script>
     <script src="https://apis.google.com/js/client.js"></script>
