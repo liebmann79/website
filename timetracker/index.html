@@ -18,7 +18,7 @@
   <body>
     <div id="infoBar" style="height:44px;">
       <h3 id="successDiv" class="appears">Thank you!</h3>
-      <h3 id="errorDiv" class="appears">Ooops, that didn't work...</h3>
+      <h3 id="errorDiv" class="appears">Ooops, that didn't work... wrong Google account maybe?</h3>
       <h3 id="loadingDiv">Hold your horses...</h3>
       <div id="authorizeDiv" class="appears">
       <h3> You are going to need to <a id="authorizeButton" href="#authorize">authorize</a> before use
@@ -69,34 +69,12 @@
     }).datepicker('setValue',trackingDate);
 
 
-    var apiKey = "AIzaSyDYQt9muwp3qIqu5PImdEXfC9tzcgaliw0";
-    var clientId = "339326896468.apps.googleusercontent.com";
-    var scopes = "https://www.googleapis.com/auth/drive.file";
-    function load() {
-      gapi.client.setApiKey(apiKey);
-      window.setTimeout(checkAuth,1);
-    }
 
-    function checkAuth() {
-      gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
-    }
-    function checkFileAuth(){
-      var request = gapi.client.drive.files.get({'fileId':"0Amb4QxC2-V3jdGYtY1R0Z2RlZG1GMUZDeUtDSHpCZkE"});
-      request.execute(function(resp) {
-        if (!resp.error) {
-          console.log('Title: ' + resp.title);
-          console.log('Description: ' + resp.description);
-          console.log('MIME type: ' + resp.mimeType);
-        } else {
-          console.log('Error code: ' + resp.error.code);
-          console.log('Error message: ' + resp.error.message);
-          // More error information can be retrieved with resp.error.errors.
-        }
-      });
-    }
 
-    function handleAuthResult(authResult) {
-      if (authResult && !authResult.error) {
+
+    function handleAuth(authResult) {
+
+      if (authResult) {
         $("#timeForm").show();
         $("#authorizeDiv").hide();
       } else {
@@ -104,6 +82,7 @@
         $("#authorizeDiv").show();
       }
       $("#loadingDiv").hide();
+
     }
 
 
@@ -172,13 +151,27 @@
 
     $("#authorizeButton").click( function(event) {
       event.preventDefault();
-      gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+      var apiKey = "AIzaSyDYQt9muwp3qIqu5PImdEXfC9tzcgaliw0";
+      var clientId = "339326896468.apps.googleusercontent.com";
+      var scopes = "https://www.googleapis.com/auth/drive.file";
+      gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuth);
     });
 
-    //TEMPORARY HACK
-    //handleAuthResult({});
+    //Deferred for authorization
+    var adfd = new jQuery.Deferred();
+    $.when(adfd.promise()).then(handleAuth,handleAuth);
+    function authCallback(resp){
+      if (resp.success) {
+        adfd.resolve(1);
+      }else{
+        adfd.reject(0);
+      }
+    }
+    setTimeout(function(){adfd.reject();},3000);
+
     </script>
-    <script src="https://apis.google.com/js/client.js?onload=load"></script>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script src="https://script.google.com/a/macros/gangverk.is/s/AKfycbw7IHDzs2oli5NyAoxR5EfkKzNNzwvUfHwsaUe9xPSeaYaOidIi/exec?authorize=1&callback=authCallback"></script>
     <script src="https://spreadsheets.google.com/feeds/list/0Amb4QxC2-V3jdGYtY1R0Z2RlZG1GMUZDeUtDSHpCZkE/2/public/basic?alt=json&callback=listProjects"></script>
   </body>
 </html
