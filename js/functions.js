@@ -1,10 +1,10 @@
 $(function() {
 	$(document).on('focusin', '.field, textarea', function() {
-		if (this.title==this.value) {
+		if (this.title == this.value) {
 			this.value = '';
 		}
-	}).on('focusout', '.field, textarea', function(){
-		if (this.value=='') {
+	}).on('focusout', '.field, textarea', function() {
+		if (this.value == '') {
 			this.value = this.title;
 		}
 	});
@@ -17,36 +17,40 @@ $(function() {
 	var $map = $('#map-frame');
 	var forcedScroll = false;
 
-	$('li', $mainNav).on('mouseenter', function(){ // nav indicator
+	$('li', $mainNav).on('mouseenter', function() { // nav indicator
 		if ($(window).width() > 1025){
 			indicatorPos($(this));
 		}
-	}).on('mouseleave', function(){
+	}).on('mouseleave', function() {
 		if ($(window).width() > 1025){
 			indicatorPos($mainNav.find('.current'));
 		}
 	});
 
-	$('a', $mainNav).on('click', function(){
+	$('a', $mainNav).on('click', function() {
 		window.location.hash = $(this).attr('href');
 		slidePage(true);
 		return false;
 	});
 
 	// devices slider in lower resolutions
-	$('.devices').each(function(){
+	$('.devices').each(function() {
 		$('.devices-nav a:first', this).addClass('current');
 		$('.phone-img:first', this).addClass('current');
 	});
 
-	$('.devices-nav a').on('click',function(){
+	$('.devices-nav a').on('click',function() {
 		var idx = $(this).index();
 		$(this).addClass('current').siblings().removeClass('current');
 		$(this).parents('.devices').find('.phone-img').eq(idx).addClass('current').siblings().removeClass('current');
 		return false;
 	});
 
-	$(window).on('load',function(){
+    $('a.move-to-first-page').on('click', function() {
+        $('.slider').trigger('next');
+    });
+
+	$(window).on('load',function() {
 		slidePage(true);
 
 		$('.slider').carouFredSel({
@@ -60,21 +64,26 @@ $(function() {
 			next: '.carousel .next',
 			pagination: {
 				container: '#intro .thumbs-i',
-				anchorBuilder: false
+				anchorBuilder: false,
+                onBefore: function() {
+                    window.location.hash = '#/intro';
+                    slidePage(true);
+		            return false;
+                }
 			},
-			onCreate: function(){
+			onCreate: function() {
 				$('.carousel').addClass('loaded');
 			}
 		});
 
 		$map.attr('src', $map.data("src"));
-	}).on('scroll', function(){
+	}).on('scroll', function() {
 		if (!forcedScroll) {
 			var offT = $(window).scrollTop();
 			var visibleArea = $(window).height()*0.6;
 
-			$('.section:not(#about)').each(function(){
-				if ($(this).offset().top >= (offT-visibleArea)){
+			$('.section:not(#about)').each(function() {
+				if ($(this).offset().top >= (offT-visibleArea)) {
 					var newCurrent = $mainNav.find('a[href="#/'+$(this).attr('id')+'"]').parent();
 					newCurrent.addClass('current').siblings().removeClass('current');
 					indicatorPos(newCurrent);
@@ -107,7 +116,7 @@ $(function() {
 			$("body").removeAttr('style');
 			$aboutPage.removeClass('visible');
 			$header.removeClass('black');
-			$aboutPage.slideUp(duration*2, function(){
+			$aboutPage.slideUp(duration*2, function() {
 				forcedScroll = false;
 			});
 		}
@@ -118,7 +127,7 @@ $(function() {
 			indicatorPos($mainNav.find('.current'));
 			if (triggerSlide) {
 				forcedScroll = true;
-				$('body, html').animate({scrollTop: page.offset().top}, duration*4, function(){
+				$('body, html').animate({scrollTop: page.offset().top}, duration*4, function() {
 					forcedScroll = false;
 				});
 			}
@@ -128,7 +137,7 @@ $(function() {
 			$mainNav.find('a[href="#/about"]').parent().addClass('current').siblings().removeClass('current');
 			indicatorPos($mainNav.find('.current'));
 			$header.addClass('black');
-			$aboutPage.slideDown(duration*4, function(){
+			$aboutPage.slideDown(duration*4, function() {
 				$("body").css('overflow', 'hidden');
 				$aboutPage.addClass('visible');
 			});
