@@ -102,6 +102,8 @@ $(function() {
 		var duration = 200;
 		var pageString = window.location.hash.slice(2);
 		if (pageString == '') {
+            // no hash, root of page, don't auto scroll down
+            indicatorPos($mainNav.find('.current'));
 			return;
         }
 
