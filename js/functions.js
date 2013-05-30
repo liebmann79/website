@@ -51,7 +51,7 @@ $(function() {
     });
 
 	$(window).on('load',function() {
-		slidePage(false);
+		slidePage(true);
 
 		$('.slider').carouFredSel({
 			auto:false,
@@ -101,9 +101,8 @@ $(function() {
 	function slidePage(triggerSlide) {
 		var duration = 200;
 		var pageString = window.location.hash.slice(2);
-
 		if (pageString == '') {
-			pageString = "intro";
+			return;
         }
 
 		if ($aboutPage.is('.visible')){
