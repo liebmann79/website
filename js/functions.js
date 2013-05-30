@@ -51,7 +51,7 @@ $(function() {
     });
 
 	$(window).on('load',function() {
-		slidePage(true);
+		slidePage(false);
 
 		$('.slider').carouFredSel({
 			auto:false,

@@ -20,7 +20,6 @@ body {
     color: #000;
     background: #fff;
     min-width: 1000px;
-    background-color: #fff;
 }
 
 a {
@@ -457,6 +456,7 @@ p {
 
 .carousel .aside {
     padding-top: 15px;
+    font-size: 18px;
 }
 
 .carousel .aside h2 {
